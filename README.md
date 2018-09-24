@@ -1,0 +1,1 @@
+# Simple Arch Linux installer
