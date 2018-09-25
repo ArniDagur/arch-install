@@ -12,35 +12,30 @@ locale-gen
 passwd
 
 # 11. Boot loader
+dialog --infobox "Installing bootloader..." 4 50
 refind-install
 
-# -- RICE --
-# Install yay from the AUR
-git clone --bare https://aur.archlinux.org/yay.git /tmp/yay
-cd /tmp/yay
-makepkg --noconfirm -si
+# ---- Post-Install ----
+# -- Create user --
+name=$(dialog --no-cancel --inputbox "Enter a name for the user account." 10 60 --output-fd 1)
+pass1=$(dialog --no-cancel --passwordbox "Enter a password for that user." 10 60 --output-fd 1)
+pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 --output-fd 1)
 
-# -- Development --
-pacman -S --noconfirm --needed python clang cmake rustup rust-racer
-rustup install nightly
-rustup default nightly
-rustup component add rls-preview
-rustup component add rustfmt-preview
+while [ $pass1 != $pass2 ]
+do
+    pass1=$(dialog --no-cancel --passwordbox "Passwords do not match.\n\nEnter password again." 10 60 --output-fd 1)
+    pass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 --output-fd 1)
+    unset pass2
+done
 
-# -- Graphical environment --
-pacman -S --noconfirm --needed xorg xorg-xinit i3-gaps i3blocks arc-gtk-theme dmenu feh acpi
-yay -Sa --noconfirm i3lock-color paper-icon-theme-git
+dialog --infobox "Adding user \"$name\"..." 4 50
+useradd -m -g wheel -s /bin/bash $name
+echo "$name:$pass1" | chpasswd
 
-# -- Fonts --
-pacman -S --noconfirm --needed ttf-ubuntu-font-family ttf-computer-modern-fonts ttf-dejavu ttf-fira-code ttf-fira-sans ttf-font-awesome ttf-droid ttf-roboto noto-fonts
-pacman -S --noconfirm --needed adobe-source-han-sans-cn-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts adobe-source-han-serif-tw-fonts noto-fonts-cjk adobe-source-han-sans-jp-fonts noto-fonts-emoji ttf-freefont ttf-arphic-uming ttf-indic-otf
-yay -Sa --noconfirm powerline-fonts-git ttf-ms-fonts ttf-mac-fonts ttf-monapo
-
-# -- Essential programs --
-# GUI
-pacman -S --noconfirm --needed alacritty qutebrowser keepassxc
-# CLI
-pacman -S --noconfirm --needed xclip
-# Editors
-pacman -S --noconfirm --needed python-neovim emacs
-yay -Sa --noconfirm neovim-symlinks
+# -- Install userland programs as user $name --
+# Instate sudoers file that allows users in wheel group to issue any command without a password.
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/sudoers_tmp > /etc/sudoers
+# Run programs.sh
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/programs.sh > /tmp/programs.sh && sudo -u $name bash /tmp/programs.sh && rm /tmp/programs.sh
+# Instate normal sudoers file
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/sudoers > /etc/sudoers
