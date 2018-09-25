@@ -37,4 +37,10 @@ pacman -S --noconfirm --needed adobe-source-han-sans-cn-fonts adobe-source-han-s
 yay -Sa --noconfirm powerline-fonts-git ttf-ms-fonts ttf-mac-fonts ttf-monapo
 
 # -- Essential programs --
-pacman -S --noconfirm --needed alacritty
+# GUI
+pacman -S --noconfirm --needed alacritty qutebrowser keepassxc
+# CLI
+pacman -S --noconfirm --needed xclip
+# Editors
+pacman -S --noconfirm --needed python-neovim emacs
+yay -Sa --noconfirm neovim-symlinks
