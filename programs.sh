@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Install yay from the AUR
+cd /tmp
 curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
 tar -xvf yay.tar.gz
 cd yay
