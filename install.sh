@@ -8,7 +8,7 @@ pacman -S --noconfirm --needed dialog || (echo "Are you sure you have an interne
 timedatectl set-ntp true
 
 # 2. Partition the disks
-disk="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your disk called?\n    Example: /dev/sda" 10 100 --output-fd 1)"
+disk="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your disk called?\n    Example: /dev/sda" 30 100 --output-fd 1)"
 
 cat <<EOF | gdisk $disk
 o
@@ -40,8 +40,8 @@ y
 EOF
 
 # 3. Format the partitions
-rootpart="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your root partition called?\n    Example: /dev/sda2" 10 100 --output-fd 1)"
-bootpart="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your boot partition called?\n    Example: /dev/sda1" 10 100 --output-fd 1)"
+rootpart="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your root partition called?\n    Example: /dev/sda2" 30 100 --output-fd 1)"
+bootpart="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your boot partition called?\n    Example: /dev/sda1" 30 100 --output-fd 1)"
 
 mkfs.vfat $bootpart
 mkfs.ext4 $rootpart
@@ -56,14 +56,14 @@ mount /dev/sdb1 /mnt/sdb || rmdir /mnt/sdb
 
 # -- Installation --
 # 5. Install the base packages
-pacstrap -i /mnt base base-devel refind-efi neovim git --ignore nano,vi
+pacstrap -i /mnt base base-devel refind-efi neovim git dialog --ignore nano,vi
 
 # -- Configure the system --
 # 6. Generate an fstab file
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Specify hostname
-echo "$(dialog --no-calcel --inputbox "Specify hostname:" 10 100 --output-fd 1)" > /mnt/etc/hostname
+echo "$(dialog --no-cancel --inputbox "Specify hostname:" 10 100 --output-fd 1)" > /mnt/etc/hostname
 
 # - CHROOT commands -
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/chroot.sh > /mnt/chroot.sh && arch-chroot /mnt bash chroot.sh && rm /mnt/chroot.sh
