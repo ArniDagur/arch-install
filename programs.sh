@@ -1,10 +1,12 @@
 #!/bin/sh
 
 # Install yay from the AUR
-git clone --bare https://aur.archlinux.org/yay.git /tmp/yay
-cd /tmp/yay
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
+tar -xvf yay.tar.gz
+cd yay
 makepkg --noconfirm -si
-cd /tmp
+cd ..
+rm -rf yay yay.tar.gz
 
 # -- Development --
 pacman -S --noconfirm --needed python clang cmake rustup rust-racer
