@@ -36,6 +36,6 @@ echo "$name:$pass1" | chpasswd
 # Instate sudoers file that allows users in wheel group to issue any command without a password.
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/sudoers_tmp > /etc/sudoers
 # Run programs.sh
-curl https://raw.githubusercontent.com/ArniDagur/arch-install/programs.sh > /tmp/programs.sh && sudo -u $name bash /tmp/programs.sh && rm /tmp/programs.sh
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/programs.sh > /tmp/programs.sh && sudo -u $name bash /tmp/programs.sh && rm /tmp/programs.sh
 # Instate normal sudoers file
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/sudoers > /etc/sudoers

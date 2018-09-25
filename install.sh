@@ -43,9 +43,9 @@ EOF
 rootpart="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your root partition called?\n    Example: /dev/sda2" 30 100 --output-fd 1)"
 bootpart="$(dialog --no-cancel --inputbox "$(lsblk)\n\nWhat is your boot partition called?\n    Example: /dev/sda1" 30 100 --output-fd 1)"
 
-mkfs.vfat $bootpart
-mkfs.ext4 $rootpart
-mkfs.ext4 /dev/sdb1
+echo "y" | mkfs.vfat $bootpart
+echo "y" | mkfs.ext4 $rootpart
+echo "y" | mkfs.ext4 /dev/sdb1
 
 # 4. Mount the file systems
 mount $rootpart /mnt
