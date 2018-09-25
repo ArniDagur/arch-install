@@ -4,6 +4,9 @@
 pacman -S --noconfirm --needed dialog || (echo "Are you sure you have an internet connection?" && exit)
 
 # -- Pre-Installation
+# 0. Set keyboard layout
+curl https://raw.githubusercontent.com/ArniDagur/qgmlwy-icelandic/master/qgmlwy.map > /tmp/qgmlwy.map && loadkeys /tmp/qgmlwy.map
+
 # 1. Update the system clock
 timedatectl set-ntp true
 
