@@ -26,11 +26,13 @@ yay -S --repo --noconfirm ttf-ubuntu-font-family ttf-computer-modern-fonts ttf-d
 yay -S --repo --noconfirm adobe-source-han-sans-cn-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts adobe-source-han-serif-tw-fonts noto-fonts-cjk adobe-source-han-sans-jp-fonts
 # Emoji
 yay -S --repo --noconfirm noto-fonts-emoji ttf-freefont ttf-arphic-uming ttf-indic-otf
+# Non-powerline monospace
+yay -S --repo adobe-source-code-pro-fonts
 yay -Sa --noconfirm powerline-fonts-git ttf-ms-fonts ttf-mac-fonts ttf-monapo
 
 # -- Essential programs --
 # GUI
-yay -S --repo --noconfirm alacritty qutebrowser keepassxc
+yay -S --repo --noconfirm alacritty qutebrowser keepassxc mupdf
 # CLI
 yay -S --repo --noconfirm xclip
 # Editors
