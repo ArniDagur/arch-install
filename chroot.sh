@@ -4,7 +4,7 @@ ln -sf /usr/share/zoneinfo/Atlantic/Reykjavik /etc/localtime
 hwclock --systohc
 
 # 9. Localization
-echo "en_us.UTF-8 UTF-8" >> /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 # TODO: Set LANG variable in locale.conf accordingly
 
