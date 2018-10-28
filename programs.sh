@@ -15,7 +15,7 @@ rustup install nightly
 rustup default nightly
 rustup component add rls-preview
 rustup component add rustfmt-preview
-rustup component add crippy-preview
+rustup component add clippy-preview
 rustup component add rust-src
 
 # -- Graphical environment --
