@@ -15,6 +15,8 @@ rustup install nightly
 rustup default nightly
 rustup component add rls-preview
 rustup component add rustfmt-preview
+rustup component add crippy-preview
+rustup component add rust-src
 
 # -- Graphical environment --
 yay -S --repo --noconfirm xorg xorg-xinit i3-gaps i3blocks arc-gtk-theme dmenu feh acpi
