@@ -1,5 +1,5 @@
 #!/bin/sh
-# 8. Set the time zone
+# 8. Set the time
 ln -sf /usr/share/zoneinfo/Atlantic/Reykjavik /etc/localtime
 hwclock --systohc
 
@@ -12,8 +12,26 @@ locale-gen
 passwd
 
 # 11. Boot loader
-dialog --infobox "Installing bootloader..." 4 50
-refind-install
+rootpart=$(dialog --no-cancel --inputbox "$(lsblk -o NAME,SIZE,TYPE)\n\nEnter name of root partition (e.g. /dev/sda2)" 30 100 --output-fd 1)
+partuuid=$(blkid -o value -s PARTUUID $rootpart)
+bootctl install
+
+cat >/boot/loader/loader.conf <<EOF
+default arch-zen
+timeout 3
+EOF
+
+# Enable NVIDIA Direct Rendering Manager if this computer has an NVIDIA GPU
+if lspci | grep ' VGA ' | grep -i 'NVIDIA'; then
+    nvidia_param='nvidia-drm.modeset=1'
+fi
+
+cat >/boot/loader/entries/arch-zen.conf <<EOF
+title Arch Linux Zen
+linux /vmlinuz-linux-zen
+initrd /initramfs-linux-zen.img
+options root=PARTUUID=$partuuid rw $nvidia_param
+EOF
 
 # ---- Post-Install ----
 # -- Create user --
@@ -29,13 +47,13 @@ do
 done
 
 dialog --infobox "Adding user \"$name\"..." 4 50
-useradd -m -g wheel -s /bin/bash $name
+useradd -m -g wheel -s /bin/zsh $name
 echo "$name:$pass1" | chpasswd
 
 # -- Install userland programs as user $name --
 # Instate sudoers file that allows users in wheel group to issue any command without a password.
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/sudoers_tmp > /etc/sudoers
 # Run programs.sh
-curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/programs.sh > /tmp/programs.sh && sudo -u $name bash /tmp/programs.sh && rm /tmp/programs.sh
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/programs.sh > /tmp/programs.sh && sudo -u $name bash /tmp/programs.sh
 # Instate normal sudoers file
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/sudoers > /etc/sudoers
