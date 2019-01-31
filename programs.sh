@@ -25,29 +25,41 @@ yay -S --repo --noconfirm python python-pip python-numpy python-matplotlib pytho
 
 # -- Graphical environment --
 yay -S --repo --noconfirm xorg xorg-xinit xorg-apps xclip i3-gaps i3blocks arc-gtk-theme dmenu feh acpi unclutter
-yay -Sa --noconfirm i3lock-color paper-icon-theme-git
+yay -S --noconfirm i3lock-color paper-icon-theme-git
 
 # -- Fonts --
 # Fonts stolen from other operating systems:
 yay -S --noconfirm ttf-ubuntu-font-family ttf-mac-fonts ttf-ms-fonts
 # Font for i3blocks
-yay -S --noconfirm ttf-font-awesome
+yay -S --noconfirm ttf-font-awesome-4
 # Latin fonts
 yay -S --noconfirm ttf-dejavu
 # Asian
-yay -S --noconfirm adobe-source-han-sans-cn-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts adobe-source-han-serif-tw-fonts noto-fonts-cjk adobe-source-han-sans-jp-fonts
+yay -S --noconfirm adobe-source-han-sans-cn-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts adobe-source-han-serif-tw-fonts adobe-source-han-sans-jp-fonts
 # Emoji
 yay -S --noconfirm noto-fonts-emoji ttf-freefont ttf-arphic-uming ttf-indic-otf
 # Monospace fonts
 yay -S --noconfirm adobe-source-code-pro-fonts powerline-fonts-git
 
-# -- Essential programs --
-# GUI
-yay -S --noconfirm alacritty qutebrowser pdfjs keepassxc mupdf thunar discord
-# CLI
+# -- CLI --
+# Compression
 yay -S --noconfirm p7zip
 # Editors
 yay -S --noconfirm python-neovim neovim-symlinks emacs
+
+# -- GUI --
+# Terminal emulator
+yay -S --noconfirm alacritty
+# PDF viewer
+yay -S --noconfirm mupdf
+# Web browser
+yay -S --noconfirm qutebrowser pdfjs
+# File explorer
+yay -S --noconfirm ranger
+# Password manager
+yay -S --repo --noconfirm keepassxc
+# Social
+yay -S --noconfirm discord-ptb
 
 # -- Drivers --
 # Install appropriate video drivers
@@ -66,7 +78,14 @@ EOF
 fi
 if echo $gpu | grep -i 'Intel'; then
     # -- Intel (laptops) --
-    yay -S --repo --noconfirm xf86-video-intel mesa lib32-mesa intel-media-driver
+    yay -S --repo --noconfirm xf86-video-intel mesa lib32-mesa intel-media-driver intel-gpu-tools
 fi
 # Touchpad and Wacom Tablet drivers
 yay -S --repo --noconfirm xf86-input-synaptics xf86-input-wacom
+
+# -- Pacman stuff --
+# Sort pacman mirrors
+yay -S --noconfirm reflector
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/mirrorupgrade.hook > /etc/pacman.d/hooks/mirrorupgrade.hook
+# _NECCESARY_ for makepkg.conf:
+yay -S --noconfirm aria2-fast pigz pbzip2
