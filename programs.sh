@@ -9,6 +9,9 @@ makepkg --noconfirm -si
 cd ..
 rm -rf yay yay.tar.gz
 
+# -- Patched software --
+yay -S --noconfirm freetype2-cleartype aria2-fast openblas-lapack bzip2-with-lbzip2-symlinks gzip-with-pigz-symlinks
+
 # -- Development --
 # Tools
 yay -S --repo --noconfirm clang cmake
@@ -88,4 +91,4 @@ yay -S --repo --noconfirm xf86-input-synaptics xf86-input-wacom
 yay -S --noconfirm reflector
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/mirrorupgrade.hook > /etc/pacman.d/hooks/mirrorupgrade.hook
 # _NECCESARY_ for makepkg.conf:
-yay -S --noconfirm aria2-fast pigz pbzip2
+yay -S --noconfirm --needed pigz lbzip2
