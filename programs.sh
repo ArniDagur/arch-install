@@ -87,8 +87,11 @@ fi
 yay -S --repo --noconfirm xf86-input-synaptics xf86-input-wacom
 
 # -- Pacman stuff --
-# Sort pacman mirrors
-yay -S --noconfirm reflector
+# Hooks
+mkdir /usr/share/libalpm/hooks
+yay -S --noconfirm reflector pacman-contrib
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/systemd-boot.hook > /etc/pacman.d/hooks/systemd-boot.hook
 curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/mirrorupgrade.hook > /etc/pacman.d/hooks/mirrorupgrade.hook
-# _NECCESARY_ for makepkg.conf:
+curl https://raw.githubusercontent.com/ArniDagur/arch-install/master/files/paccache-clean.hook > /etc/pacman.d/hooks/paccache-clean.hook
+# _NECCESARY_ for makepkg.conf
 yay -S --noconfirm --needed pigz lbzip2
