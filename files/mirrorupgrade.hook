@@ -7,4 +7,4 @@ Target = pacman-mirrorlist
 Description = Updating pacman-mirrorlist with reflector and removing pacnew...
 When = PostTransaction
 Depends = reflector
-Exec = /bin/sh -c "reflector -c Iceland -c Sweden -c Norway -c Denmark -c Finland -c Germany -c France -c Netherlands -c Belgium -c Luxembourg -c 'United Kingdom' -c Ireland -c Switzerland -c Czechia -c Austria --latest 200 --age 24 --threads=$(nproc) --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
+Exec = /bin/sh -c "reflector -c Iceland -c Sweden -c Norway -c Denmark -c Finland -c Estonia -c Latvia -c Lithuania -c Germany -c France -c Netherlands -c Belgium -c Luxembourg -c Poland -c 'United Kingdom' -c Ireland -c Switzerland -c Czechia -c Austria -c Slovakia -c Portugal -c Spain -c Italy --latest 200 --age 24 --threads=$(nproc) --sort rate --save /etc/pacman.d/mirrorlist; rm -f /etc/pacman.d/mirrorlist.pacnew"
